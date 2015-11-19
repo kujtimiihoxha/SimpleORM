@@ -15,9 +15,9 @@ public class DataSource {
     private DataSource() throws IOException, SQLException, PropertyVetoException {
         cpds = new ComboPooledDataSource();
         cpds.setDriverClass( "com.mysql.jdbc.Driver" ); //loads the jdbc driver
-        cpds.setJdbcUrl( "jdbc:mysql://bms-db:3306/bms" );
+        cpds.setJdbcUrl( "jdbc:mysql://localhost:3306/myDB" );
         cpds.setUser("user");
-        cpds.setPassword("123456");
+        cpds.setPassword("password");
     }
 
     public static DataSource getInstance() throws IOException, SQLException, PropertyVetoException {
