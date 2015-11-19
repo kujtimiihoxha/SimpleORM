@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class DataSource {
 
-    private static DataSource     datasource;
+    private static DataSource datasource;
     private ComboPooledDataSource cpds;
 
     private DataSource() throws IOException, SQLException, PropertyVetoException {
