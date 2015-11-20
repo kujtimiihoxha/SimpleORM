@@ -4,9 +4,7 @@ import entity.annotations.*;
 
 import java.sql.Timestamp;
 
-/**
- * Created by kujti on 11/20/2015.
- */
+
 @Table(name = "simpleTable")
 public class SimpleModel {
     private int id;
