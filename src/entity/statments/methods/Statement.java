@@ -17,5 +17,4 @@ public interface Statement {
      * @return PreparedStatement
      */
      PreparedStatement getStatement();
-
 }

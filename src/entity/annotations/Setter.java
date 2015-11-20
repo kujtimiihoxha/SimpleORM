@@ -11,5 +11,5 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Setter {
-    String name()default"";
+    String name();
 }

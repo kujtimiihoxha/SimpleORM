@@ -31,7 +31,7 @@ public abstract class SimpleStatement implements Statement {
     @Override
     public abstract PreparedStatement getStatement();
 
-    protected void prepare() {
+    private void prepare() {
         try {
             tableName = ((Table) entityClass.getAnnotation(Table.class)).name();
         } catch (NullPointerException e) {

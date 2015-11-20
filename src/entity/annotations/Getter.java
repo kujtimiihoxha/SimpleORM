@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Getter {
-    String name()default"";
+    String name();
     boolean nullable() default true;
 
 }
