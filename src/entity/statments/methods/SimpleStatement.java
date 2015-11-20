@@ -10,9 +10,7 @@ import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by kujtimh on 15-11-07.
- */
+
 public abstract class SimpleStatement implements Statement {
     protected HashMap<Setter, Method> setterMethodHashMap = new HashMap<>();
     protected HashMap<Getter, Method> getterMethodHashMap = new HashMap<>();
@@ -33,7 +31,7 @@ public abstract class SimpleStatement implements Statement {
     @Override
     public abstract PreparedStatement getStatement();
 
-    private void prepare() {
+    protected void prepare() {
         try {
             tableName = ((Table) entityClass.getAnnotation(Table.class)).name();
         } catch (NullPointerException e) {
@@ -92,16 +90,4 @@ public abstract class SimpleStatement implements Statement {
         }
     }
 
-    protected Object controlNullPointer(Map.Entry<Getter, Method> column, Object entity) {
-        Object value = null;
-        try {
-            value = column.getValue().invoke(entity);
-            if (!column.getKey().nullable() && value == null) {
-                throw new NullPointerException("Value of " + column.getKey().name() + " can not be null");
-            }
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return value;
-    }
 }

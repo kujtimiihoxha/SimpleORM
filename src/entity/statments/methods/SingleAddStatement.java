@@ -5,6 +5,7 @@ import entity.annotations.Getter;
 
 import java.beans.PropertyVetoException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -47,7 +48,15 @@ public class SingleAddStatement extends SimpleStatement {
             statement = connection.prepareStatement(insert.toString());
             for (Map.Entry<Getter, Method> column : getterMethodHashMap.entrySet()) {
                 if (activeGetter != null) setActive(column, entity, (byte) 1);
-                Object value = controlNullPointer(column, entity);
+                Object value = null;
+                try {
+                    value = column.getValue().invoke(entity);
+                    if (!column.getKey().nullable() && value == null) {
+                        throw new NullPointerException("Value of " + column.getKey().name() + " can not be null");
+                    }
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
                 statement.setObject(a, value);
                 a++;
             }

@@ -33,7 +33,15 @@ public class MultipleUpdateStatement extends SimpleStatement {
             } else {
                 for (Map.Entry<Getter, Method> column : getterMethodHashMap.entrySet()) {
                     if (activeGetter != null) setActive(column, entity, (byte) 1);
-                    Object value = controlNullPointer(column, entity);
+                    Object value = null;
+                    try {
+                        value = column.getValue().invoke(entity);
+                        if (!column.getKey().nullable() && value == null) {
+                            throw new NullPointerException("Value of " + column.getKey().name() + " can not be null");
+                        }
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
                     try {
                         statement.setObject(b, value);
                     } catch (SQLException e) {
